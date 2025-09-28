@@ -7,23 +7,53 @@ const ChatSection = () => {
     { sender: "bot", text: "👋 Hi! I'm your Smart Farm Assistant. How can I help you today?" }
   ]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
+    // Add user message to chat
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
-
-    // Mock bot reply (you can replace this with API call later)
-    setTimeout(() => {
-      const botMessage = {
-        sender: "bot",
-        text: "🤖 I'm still learning, but soon I'll give you smart farming answers!"
-      };
-      setMessages((prev) => [...prev, botMessage]);
-    }, 1000);
-
     setInput("");
+    setLoading(true);
+
+    try {
+      // Call your Python FastAPI backend (this runs farmcare_ai)
+      const response = await fetch("http://127.0.0.1:8000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Add bot response to chat
+      setMessages(prev => [...prev, { 
+        sender: 'bot', 
+        text: data.response || "I'm not sure how to respond to that." 
+      }]);
+    } catch (error) {
+      console.error('Error:', error);
+      let errorMessage = 'Sorry, I encountered an error. Please try again later.';
+      
+      if (error.message.includes('Failed to fetch')) {
+        errorMessage = 'Unable to connect to the server. Please make sure the backend is running on http://127.0.0.1:8000';
+      } else if (error.message.includes('HTTP error')) {
+        errorMessage = `Server error: ${error.message}`;
+      }
+      
+      setMessages(prev => [...prev, { 
+        sender: 'bot', 
+        text: errorMessage
+      }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,6 +88,14 @@ const ChatSection = () => {
             </div>
           </motion.div>
         ))}
+
+        {loading && (
+          <div className="flex justify-start">
+            <div className="px-4 py-2 rounded-2xl bg-gray-100 text-gray-500 shadow-md">
+              ⏳ Thinking...
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Chat Input */}

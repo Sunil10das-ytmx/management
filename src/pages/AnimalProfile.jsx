@@ -681,7 +681,7 @@ export default function AnimalProfile() {
                     <div className="space-y-4">
                       {[
                         { label: 'Type', value: currentProfile.type, icon: <Layers className="h-4 w-4" /> },
-                        { label: 'Market Age', value: currentProfile.marketAge, icon: <Activity className="h-4 w-4" /> },
+                        { label: 'Maturity', value: currentProfile.maturity, icon: <Activity className="h-4 w-4" /> },
                         { label: 'Weight Range', value: currentProfile.weight, icon: <Hash className="h-4 w-4" /> }
                       ].map((item, index) => (
                         <motion.div
