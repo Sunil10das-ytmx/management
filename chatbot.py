@@ -12,9 +12,13 @@ load_dotenv()
 app = FastAPI()
 
 # Configure CORS
+# Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # React's default port
+    allow_origins=[
+        "http://localhost:5173",  # Local development
+        "https://farmerdigital-farm.vercel.app"  # Removed trailing slash
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
