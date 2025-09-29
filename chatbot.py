@@ -17,7 +17,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # Local development
-        "https://farmerdigital-farm.vercel.app"  # Removed trailing slash
+        "https://digitalfarm-risv5mxsy-sunil-dass-projects.vercel.app/"  # Removed trailing slash
     ],
     allow_credentials=True,
     allow_methods=["*"],

@@ -20,7 +20,7 @@ const ChatSection = () => {
 
     try {
       // Call your Python FastAPI backend (this runs farmcare_ai)
-      const response = await fetch("http://127.0.0.1:8000/chat", {
+      const response = await fetch("https://digitalfarm-risv5mxsy-sunil-dass-projects.vercel.app/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input })
