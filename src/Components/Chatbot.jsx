@@ -56,6 +56,8 @@ const ChatSection = () => {
     }
   };
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+
   return (
     <motion.div
       className="max-w-3xl mx-auto mt-16 bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl border border-gray-200 overflow-hidden flex flex-col h-[600px]"
