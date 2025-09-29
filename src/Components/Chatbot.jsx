@@ -42,7 +42,7 @@ const ChatSection = () => {
       let errorMessage = 'Sorry, I encountered an error. Please try again later.';
       
       if (error.message.includes('Failed to fetch')) {
-        errorMessage = 'Unable to connect to the server. Please make sure the backend is running on http://127.0.0.1:8000';
+        errorMessage = 'Unable to connect to the server.';
       } else if (error.message.includes('HTTP error')) {
         errorMessage = `Server error: ${error.message}`;
       }
@@ -56,7 +56,7 @@ const ChatSection = () => {
     }
   };
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://digitalfarm-risv5mxsy-sunil-dass-projects.vercel.app/';
 
   return (
     <motion.div
